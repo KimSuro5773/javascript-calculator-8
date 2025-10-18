@@ -81,6 +81,12 @@ describe('Model 클래스 테스트', () => {
       expect(numbers).toBe(0);
     });
 
+    test('연산 결과가 Safe Integer 범위를 초과하면 에러', () => {
+      expect(() => model.calculate(['9007199254740991', '1'])).toThrow(
+        ERROR_MESSAGES.NUMBER_TOO_LARGE,
+      );
+    });
+
     test('음수 입력 시 에러', () => {
       expect(() => model.calculate(['-1', '2'])).toThrow(
         ERROR_MESSAGES.NEGATIVE_NUMBER_NOT_ALLOWED,
