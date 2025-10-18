@@ -50,6 +50,8 @@ class Model {
   }
 
   #validateUserInput(str) {
+    if (str === '') return 0;
+
     if (/^-/.test(str)) {
       throw new Error(ERROR_MESSAGES.NEGATIVE_NUMBER_NOT_ALLOWED);
     }
