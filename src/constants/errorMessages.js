@@ -7,4 +7,7 @@ export const ERROR_MESSAGES = {
   // 사용자 입력 에러
   NEGATIVE_NUMBER_NOT_ALLOWED: '[ERROR] 음수는 입력할 수 없습니다.',
   INVALID_CHARACTER: '[ERROR] 구분자와 양수외에 잘못된 문자가 입력되었습니다.',
+
+  // 연산 에러
+  NUMBER_TOO_LARGE: '[ERROR] 연산 결과가 최대 정수 범위를 초과했습니다.',
 };

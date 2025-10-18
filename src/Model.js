@@ -32,7 +32,13 @@ class Model {
       return Number(str);
     });
 
-    return validateNumbers.reduce((sum, num) => sum + num, 0);
+    const result = validateNumbers.reduce((sum, num) => sum + num, 0);
+
+    if (!Number.isSafeInteger(result)) {
+      throw new Error(ERROR_MESSAGES.NUMBER_TOO_LARGE);
+    }
+
+    return result;
   }
 
   #validateCustomDelimiter(delimiter) {
