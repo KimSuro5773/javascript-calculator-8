@@ -1,4 +1,8 @@
-import { CUSTOM_DELIMITER_REGEX, DELIMITERS } from './constants/delimiter.js';
+import {
+  CUSTOM_DELIMITER_REGEX,
+  CUSTOM_SPECIAL_DELIMITER_REGEX,
+  DELIMITERS,
+} from './constants/delimiter.js';
 import { ERROR_MESSAGES } from './constants/errorMessages.js';
 
 class Model {
@@ -23,7 +27,7 @@ class Model {
   delimiterSplit(calculationString, delimiterArray) {
     // 정규식 특수문자 처리를 위한 이스케이프( "]", "[", "\" 등)
     const escapedDelimiters = delimiterArray
-      .map((delimiter) => delimiter.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
+      .map((delimiter) => delimiter.replace(CUSTOM_SPECIAL_DELIMITER_REGEX, '\\$&'))
       .join('');
 
     const delimiterRegex = new RegExp(`[${escapedDelimiters}]`);
