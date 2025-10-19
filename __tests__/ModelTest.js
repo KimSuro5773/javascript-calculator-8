@@ -60,6 +60,24 @@ describe('Model 클래스 테스트', () => {
 
       expect(result).toEqual(['1', '', '2']);
     });
+
+    test('대괄호 ] 구분자 사용', () => {
+      const result = model.delimiterSplit('1]2]3', [',', ':', ']']);
+
+      expect(result).toEqual(['1', '2', '3']);
+    });
+
+    test('백슬래시 구분자 사용', () => {
+      const result = model.delimiterSplit('1\\2\\3', [',', ':', '\\']);
+
+      expect(result).toEqual(['1', '2', '3']);
+    });
+
+    test('백틱 사용', () => {
+      const result = model.delimiterSplit('1-2-3', [',', ':', '-']);
+
+      expect(result).toEqual(['1', '2', '3']);
+    });
   });
 
   describe('calculate - 계산 테스트', () => {
