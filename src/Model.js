@@ -21,8 +21,12 @@ class Model {
   }
 
   delimiterSplit(calculationString, delimiterArray) {
-    const delimiterRegex = new RegExp(`[${delimiterArray.join('')}]`);
+    // 정규식 특수문자 처리를 위한 이스케이프( "]", "[", "\" 등)
+    const escapedDelimiters = delimiterArray
+      .map((delimiter) => delimiter.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
+      .join('');
 
+    const delimiterRegex = new RegExp(`[${escapedDelimiters}]`);
     return calculationString.split(delimiterRegex);
   }
 
