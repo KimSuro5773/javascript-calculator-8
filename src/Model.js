@@ -3,7 +3,7 @@ import {
   CUSTOM_SPECIAL_DELIMITER_REGEX,
   DELIMITERS,
 } from './constants/delimiter.js';
-import { ERROR_MESSAGES } from './constants/errorMessages.js';
+import Validator from './utils/Validator.js';
 
 class Model {
   delimiterParse(userInput) {
@@ -12,7 +12,7 @@ class Model {
     if (customDelimiterMatch) {
       const customDelimiter = customDelimiterMatch[1];
 
-      this.#validateCustomDelimiter(customDelimiter);
+      Validator.validateCustomDelimiter(customDelimiter);
 
       const calculationString = userInput.replace(CUSTOM_DELIMITER_REGEX, '');
 
@@ -35,44 +35,13 @@ class Model {
   }
 
   calculate(numbers) {
-    const validateNumbers = numbers.map((str) => {
-      this.#validateUserInput(str);
-      return Number(str);
-    });
+    const validateNumbers = numbers.map((str) => Validator.validateUserInput(str));
 
     const result = validateNumbers.reduce((sum, num) => sum + num, 0);
 
-    if (!Number.isSafeInteger(result)) {
-      throw new Error(ERROR_MESSAGES.NUMBER_TOO_LARGE);
-    }
+    Validator.validateCalculateResult(result);
 
     return result;
-  }
-
-  #validateCustomDelimiter(delimiter) {
-    if (delimiter === '') {
-      throw new Error(ERROR_MESSAGES.EMPTY_CUSTOM_DELIMITER);
-    }
-
-    if (delimiter.length > 1) {
-      throw new Error(ERROR_MESSAGES.CUSTOM_DELIMITER_LENGTH_EXCEEDED);
-    }
-
-    if (/\d/.test(delimiter)) {
-      throw new Error(ERROR_MESSAGES.CUSTOM_DELIMITER_CONTAINS_NUMBER);
-    }
-  }
-
-  #validateUserInput(str) {
-    if (str === '') return 0;
-
-    if (/^-/.test(str)) {
-      throw new Error(ERROR_MESSAGES.NEGATIVE_NUMBER_NOT_ALLOWED);
-    }
-
-    if (!/^\d+$/.test(str)) {
-      throw new Error(ERROR_MESSAGES.INVALID_CHARACTER);
-    }
   }
 }
 
